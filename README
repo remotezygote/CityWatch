@@ -1,1 +1,14 @@
 Watch servers, etc, whatever
+
+https://github.com/delano/sysinfo/
+
+Want to monitor:
+Server Load
+Disk Usage
+Memory Profiler (usage)
+CPU usage
+Network Throughput
+Nginx
+Processes
+Ruby GC
+Redis
