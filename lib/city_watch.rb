@@ -1,0 +1,1 @@
+require 'city_watch/boot'
