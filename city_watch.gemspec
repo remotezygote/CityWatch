@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.unshift File.expand_path("../lib", __FILE__)
-require "version"
+require "city_watch/version"
 
 Gem::Specification.new do |s|
 	s.name        = "city_watch"
@@ -11,6 +11,8 @@ Gem::Specification.new do |s|
 	s.homepage    = "http://cozy.co"
 	s.summary     = %q{Server/process monitoring}
 	s.description = %q{}
+	
+	s.rubyforge_project = "city_watch"
 	
 	s.files         = `git ls-files`.split("\n")
 	s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
