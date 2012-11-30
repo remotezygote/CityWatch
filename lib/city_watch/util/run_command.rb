@@ -1,16 +1,22 @@
 module RunCommand
 	
 	def command_output
-		`#{command}`
+		unless `which #{options[:command]}` == ""
+			`#{command_line}`
+		else
+			puts "Command not present: #{options[:command]} (Skipping)"
+			""
+		end
 	end
 	
-	def command
+	def command_line
 		@command ||= "#{options[:command]} #{command_line_opts}"
 	end
 	
 	def command_line_opts
 		options.inject([]) do |acc,(k,v)|
-			acc << "-#{k} #{v}"
+			acc << "-#{k} #{v}" unless k == :command
+			acc
 		end.join(" ")
 	end
 	
@@ -24,6 +30,7 @@ module RunCommand
 	end
 	
 	def data
+		headers = false
 		output = []
 		command_output.split("\n").map {|line| v = line.split("\s"); v.shift; v }.each do |line|
 			if !headers
@@ -40,25 +47,24 @@ module RunCommand
 		output
 	end
 	
-	class ClassMethods
+	module ClassMethods
 		
 		def set_opts(opts={})
-			@opts = defaults.merge(opts)
+			@opts = options.merge(opts)
 			@command = nil
 		end
-		alias_method :defaults, :set_opts
 		
 		def options
-			@opts ||= set_opts
-		end
-		
-		def default_options
-			@defaults
+			@opts ||= {}
 		end
 		
 		def command(cmd,opts={})
 			options[:command] = cmd
-			defaults opts
+			set_opts opts
+		end
+		
+		def data
+			new.data
 		end
 		
 	end
