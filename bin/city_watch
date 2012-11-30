@@ -2,4 +2,4 @@
 
 require 'city_watch'
 
-CityWatch.watch!
+Commands.test

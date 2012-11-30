@@ -1,1 +1,1 @@
-require 'city_watch/boot'
+require 'city_watch/commands'
