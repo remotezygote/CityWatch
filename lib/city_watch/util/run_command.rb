@@ -2,6 +2,7 @@ module RunCommand
 	
 	def command_output
 		unless `which #{options[:command]}` == ""
+			puts "Running `#{command_line}`..."
 			`#{command_line}`
 		else
 			puts "Command not present: #{options[:command]} (Skipping)"
@@ -10,12 +11,12 @@ module RunCommand
 	end
 	
 	def command_line
-		@command ||= "#{options[:command]} #{command_line_opts}"
+		@command ||= "#{options[:command]} #{command_line_opts}#{options[:grep] && " | fgrep #{options[:grep]}"}"
 	end
 	
 	def command_line_opts
 		options.inject([]) do |acc,(k,v)|
-			acc << "-#{k} #{v}" unless k == :command
+			acc << "-#{k} #{v}" unless [:command, :grep].include?(k)
 			acc
 		end.join(" ")
 	end
@@ -61,6 +62,10 @@ module RunCommand
 		def command(cmd,opts={})
 			options[:command] = cmd
 			set_opts opts
+		end
+		
+		def grep(str)
+			options[:grep] = str
 		end
 		
 		def data
