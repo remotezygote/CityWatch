@@ -18,5 +18,5 @@ end
 require 'city_watch/util/run_command'
 require 'city_watch/commands/ps'
 require 'city_watch/commands/mpstat'
-require 'city_watch/commands/netstat'
+# require 'city_watch/commands/netstat'
 # require 'city_watch/commands/iostat'
