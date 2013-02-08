@@ -63,7 +63,9 @@ module CityWatch
 		end
 	end
 	
-	
+	def self.header
+		'<html><head><link rel="stylesheet" href="/stylesheets/city_watch.css"><link rel="stylesheet" href="/stylesheets/default.css"><script src="/javascripts/city_watch.js"></script><script src="/javascripts/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body>'
+	end
 	
 end
 

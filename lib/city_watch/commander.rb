@@ -6,5 +6,5 @@ end
 
 ::Routes = CityWatch::Routes
 
-require 'city_watch/commander/home'
 require 'city_watch/commander/server'
+require 'city_watch/commander/home'

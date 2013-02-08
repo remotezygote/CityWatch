@@ -1,0 +1,30 @@
+body{
+	padding:2em 5em;
+	font-family:'Arial';
+	font-size:13px;
+}
+h1,h2,h3,h4{
+	font-weight:bold;
+}
+h1{
+	font-size:135%;
+}
+h4{
+	font-size:105%;
+}
+a{
+	color:rgb(50,30,100);
+	text-decoration:none;
+	border-bottom:1px dotted #666;
+}
+a:hover{
+	border-style-bottom:solid;
+}
+ul,ul li{
+	margin:0;
+	padding:0;
+	padding-left:1em;
+}
+ul li{
+	list-style-type:none;
+}
