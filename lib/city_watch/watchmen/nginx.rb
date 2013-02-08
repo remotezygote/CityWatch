@@ -13,8 +13,8 @@ class Nginx
 			acc
 		end
 		
-		if `curl -I http://localhost/nginx_status`[/^HTTP\/1.1 200/]
-			active, garbage, nums, open = `curl http://localhost/nginx_status`.split("\n")
+		if `curl -I -silent http://localhost/nginx_status`[/^HTTP\/1.1 200/]
+			active, garbage, nums, open = `curl -silent http://localhost/nginx_status`.split("\n")
 			accepts, handled, requests = nums.split
 			garbage, reading, garbage, writing, garbage, waiting = open.split
 			out = out.merge({:active_connections => active.gsub(/.*:/,'').to_i, :accepted => accepts.to_i, :handled => handled.to_i, :requests => requests.to_i, :reading => reading.to_i, :writing => writing.to_i, :waiting => waiting.to_i})
