@@ -3,7 +3,7 @@ $:.unshift File.expand_path("../lib", __FILE__)
 require "version"
 
 Gem::Specification.new do |s|
-	s.name        = "city_watch"
+	s.name        = "city-watch"
 	s.version     = CityWatch::VERSION
 	s.platform    = Gem::Platform::RUBY
 	s.authors     = ["John Bragg"]
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 	s.summary     = %q{Server/process monitoring}
 	s.description = %q{}
 	
-	s.rubyforge_project = "city_watch"
+	s.rubyforge_project = "city-watch"
 	
 	s.files         = `git ls-files`.split("\n")
 	s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
