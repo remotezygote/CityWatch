@@ -3,7 +3,7 @@ module CityWatch
 	def self.configure
 		require 'optparse'
 		options = {
-			:config_file => "/etc/city_watch.conf",
+			:config_file => "/etc/#{File.basename($0)}.conf",
 		}
 		OptionParser.new do |opts|
 		  opts.banner = "Usage: city_watch [options]"
@@ -40,7 +40,7 @@ module CityWatch
 			rackup_opts[:set_listener] = true
 		end
 		rackup_opts[:daemonize] = config[:unicorn][:config_file] || false
-		rackup_opts[:options][:config_file] = BASE_PATH + "/.." + config[:unicorn][:config_file] if config[:unicorn][:config_file]
+		rackup_opts[:options][:config_file] = config[:unicorn][:config_file] if config[:unicorn][:config_file]
 	end
 	
 	def self.redis

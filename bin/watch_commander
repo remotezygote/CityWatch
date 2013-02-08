@@ -3,7 +3,7 @@
 require 'yajl'
 require 'city_watch'
 
-puts "Starting watch collector..."
+puts "Starting watch commander..."
 
 require 'unicorn/launcher'
 
