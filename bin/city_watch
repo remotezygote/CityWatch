@@ -1,5 +1,19 @@
 #!/usr/bin/env ruby
 
+require 'yajl'
 require 'city_watch'
+require 'city_watch/agent'
 
-Commands.test
+CityWatch.configure if ARGV[0]
+
+dat = {
+	:hostname => ::Socket.gethostname,
+	# :commands => Commands.data,
+	:watchmen => Watchmen.data
+}
+
+if CityWatch.config[:collector]
+	Collector.send!(CityWatch.config[:collector],dat)
+else
+	puts Yajl::Encoder.encode(dat)
+end

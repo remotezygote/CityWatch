@@ -3,8 +3,14 @@ module Commands
 	def self.test
 		@command_list.each do |cmd|
 			puts "Running #{cmd.name}:"
-			puts cmd.data
+			puts cmd.data.inspect
 			puts "Done."
+		end
+	end
+	
+	def self.data
+		@command_list.inject({}) do |acc,cmd|
+			acc[cmd.name] = cmd.data
 		end
 	end
 	

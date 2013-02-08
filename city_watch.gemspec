@@ -21,4 +21,9 @@ Gem::Specification.new do |s|
 	s.required_ruby_version = '>= 1.9.2'
 	s.add_dependency "redis"
 	s.add_dependency "rspec"
+	s.add_dependency "rack"
+	s.add_dependency "rack-mount"
+	s.add_dependency "unicorn"
+	s.add_dependency "yajl-ruby"
+	s.add_dependency "sysinfo"
 end

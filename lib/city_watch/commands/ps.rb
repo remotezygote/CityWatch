@@ -2,7 +2,7 @@ class PS
 	
 	include RunCommand
 	
-	command :ps, :aux => ""
+	command :ps
 	
 	def command_line_opts
 		"aux"
@@ -18,7 +18,7 @@ class PS
 			end
 			next unless headers
 			pkt = {}
-			cmd = line.slice!(11,line.size-1)
+			cmd = line.slice!(10,line.size-1)
 			line << cmd.join(" ")
 			line.each_with_index do |itm,idx|
 				pkt[headers[idx]] = itm
