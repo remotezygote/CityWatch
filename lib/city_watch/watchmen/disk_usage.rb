@@ -4,7 +4,8 @@ class DiskUsage
 	
 	def self.data
 		dat = DF.data
-		{:partitions => dat, :summary => dat.select {|d| d[:mounted]=="/"}.first[:capacity]}
+		sum = dat.select {|d| d[:mounted]=="/"}.first
+		{:partitions => dat, :summary => sum[:capacity] || sum["use%".to_sym]}
 	end
 	
 end
