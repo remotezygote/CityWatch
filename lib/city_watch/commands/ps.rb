@@ -10,22 +10,20 @@ class PS
 	
 	def data
 		headers = false
-		output = []
-		command_output.split("\n").map {|line| line.split("\s") }.each do |line|
+		command_output.split("\n").map {|line| line.split("\s") }.inject([]) do |output,line|
 			if !headers
 				headers = line.map {|hdr| hdr.downcase.to_sym}
-				next
+			else
+				pkt = {}
+				cmd = line.slice!(10,line.size-1)
+				line << cmd.join(" ")
+				line.each_with_index do |itm,idx|
+					pkt[headers[idx]] = itm
+				end
+				output << pkt
 			end
-			next unless headers
-			pkt = {}
-			cmd = line.slice!(10,line.size-1)
-			line << cmd.join(" ")
-			line.each_with_index do |itm,idx|
-				pkt[headers[idx]] = itm
-			end
-			output << pkt
+			output
 		end
-		output
 	end
 	
 end

@@ -9,17 +9,18 @@ class MPstat
 	end
 	
 	def data
+		headers = false
 		command_output.split("\n").map {|line| line.split("\s") }.inject([]) do |output,line|
 			if line[1] == "CPU"
 				headers = line.map {|hdr| hdr.gsub(/%/,'').to_sym}
-				next
+				headers[0] = :run
+			elsif headers
+				pkt = {}
+				line.each_with_index do |itm,idx|
+					pkt[headers[idx]] = itm
+				end
+				output << pkt
 			end
-			next unless headers
-			pkt = {}
-			line.each_with_index do |itm,idx|
-				pkt[headers[idx]] = itm
-			end
-			output << pkt
 			output
 		end
 	end
