@@ -7,12 +7,13 @@ class Unicorns
 			if line[:command][/^start master/]
 				acc[:masters] << line
 				acc[:master_memory] += line[:rss].to_i
+				acc[:total_memory] += line[:rss].to_i
 			end
 			if line[:command][/^start worker/]
 				acc[:workers] << line
 				acc[:worker_memory] += line[:rss].to_i
+				acc[:total_memory] += line[:rss].to_i
 			end
-			acc[:total_memory] += line[:rss].to_i
 			acc
 		end
 		out.merge({:num_masters => out[:masters].count, :num_workers => out[:workers].count, :summary => [:num_masters, :num_workers]})
