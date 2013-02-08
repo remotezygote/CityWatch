@@ -16,7 +16,7 @@ module Watchmen
 	end
 	
 	def self.register(cls)
-		@watchmen ||= Set.new
+		@watchmen ||= []
 		@watchmen << cls
 	end
 	
