@@ -12,8 +12,8 @@ dat = {
 	:watchmen => Watchmen.data
 }
 
-if CityWatch.config[:collector]
-	Collector.send!(CityWatch.config[:collector],dat)
+if CityWatch.config[:watch_collector]
+	Collector.send!(CityWatch.config[:watch_collector],dat)
 else
 	puts Yajl::Encoder.encode(dat)
 end

@@ -23,7 +23,8 @@ module CityWatch
 	
 	def self.config
 		@config ||= {
-			:collector => "localhost:62000",
+			:watch_collector => "localhost:62000",
+			:watch_commander => "localhost:62001",
 			:environment => "development",
 			:prefix => "CityWatch",
 			:redis => {}
@@ -35,12 +36,19 @@ module CityWatch
 	end
 	
 	def self.unicorn_opts(rackup_opts)
-		if config[:unicorn][:port]
-			rackup_opts[:port] = config[:unicorn][:port]
-			rackup_opts[:set_listener] = true
+		unless config[:unicorn]
+			if config[File.basename($0).to_sym]
+				config[:unicorn] = {:port => config[File.basename($0).to_sym].gsub(/.*:/,'')}
+			end
 		end
-		rackup_opts[:daemonize] = config[:unicorn][:config_file] || false
-		rackup_opts[:options][:config_file] = config[:unicorn][:config_file] if config[:unicorn][:config_file]
+		if config[:unicorn]
+			if config[:unicorn][:port]
+				rackup_opts[:port] = config[:unicorn][:port]
+				rackup_opts[:set_listener] = true
+			end
+			rackup_opts[:daemonize] = config[:unicorn][:config_file] || false
+			rackup_opts[:options][:config_file] = config[:unicorn][:config_file] if config[:unicorn][:config_file]
+		end
 	end
 	
 	def self.redis
