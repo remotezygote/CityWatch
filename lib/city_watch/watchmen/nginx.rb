@@ -17,7 +17,7 @@ class Nginx
 			active, garbage, nums, open = `curl http://localhost/nginx_status`.split("\n")
 			accepts, handled, requests = nums.split
 			garbage, reading, garbage, writing, garbage, waiting = open.split
-			out.merge({:active_connections => active.gsub(/.*:/,'').to_i, :accepted => accepts.to_i, :handled => handled.to_i, :requests => requests.to_i, :reading => reading.to_i, :writing => writing.to_i, :waiting => waiting.to_i})
+			out = out.merge({:active_connections => active.gsub(/.*:/,'').to_i, :accepted => accepts.to_i, :handled => handled.to_i, :requests => requests.to_i, :reading => reading.to_i, :writing => writing.to_i, :waiting => waiting.to_i})
 		end
 		
 		out.merge({:num_masters => out[:masters].count, :num_workers => out[:workers].count, :summary => [:num_masters, :num_workers, :active_connections]})
