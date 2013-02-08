@@ -13,13 +13,13 @@ class ResendRequest
 		post_data[:watchmen].each do |watchman,dat|
 			CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::#{watchman}", Time.now.to_i, Yajl::Encoder.encode(dat.merge({:received_at => post_data[:received_at]}))
 			if dat[:summary]
-				sum = dat[:summary].is_a?(Array) ? dat[:summary].inject({}) {|acc,k| acc[k.to_sym] = dat[k.to_sym]; acc}.merge({:received_at => post_data[:received_at]}) : dat[:summary]
+				sum = dat[:summary].is_a?(Array) ? dat[:summary].inject({}) {|acc,k| acc[k.to_sym] = dat[k.to_sym]; acc} : dat[:summary]
 				CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::#{watchman}::summary", Time.now.to_i, Yajl::Encoder.encode(sum)
 				summary[watchman] = sum
 			end
 		end
 		
-		CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::summary", Time.now.to_i, Yajl::Encoder.encode(summary)
+		CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::summary", Time.now.to_i, Yajl::Encoder.encode(summary.merge({:received_at => post_data[:received_at]}))
 		
 		[200,{"Content-Type" => "text/plain"},["Got it!"]]
 	end
