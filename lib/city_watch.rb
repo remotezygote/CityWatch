@@ -25,7 +25,8 @@ module CityWatch
 		@config ||= {
 			:collector => "localhost:62000",
 			:environment => "development",
-			:prefix => "CityWatch"
+			:prefix => "CityWatch",
+			:redis => {}
 		}
 	end
 	
@@ -42,4 +43,20 @@ module CityWatch
 		rackup_opts[:options][:config_file] = BASE_PATH + "/.." + config[:unicorn][:config_file] if config[:unicorn][:config_file]
 	end
 	
+	def self.redis
+		require 'redis'
+		@redis ||= ::Redis.new(config_opts(config[:redis], :path, :db, :password))
+	end
+	
+	def self.config_opts(conf,*opts)
+		opts.inject({}) do |a,k|
+			a[k] = conf[k]
+			a
+		end
+	end
+	
+	
+	
 end
+
+CityWatch.configure if ARGV[0]

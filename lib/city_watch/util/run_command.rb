@@ -1,13 +1,17 @@
 module RunCommand
 	
 	def command_output
-		unless `which #{options[:command]}` == ""
+		unless !supported?
 			puts "Running `#{command_line}`..." if CityWatch.debug?
 			`#{command_line}`
 		else
 			puts "Command not present: #{options[:command]} (Skipping)" if CityWatch.debug?
 			""
 		end
+	end
+	
+	def supported?
+		`which #{options[:command]}` != ""
 	end
 	
 	def command_line

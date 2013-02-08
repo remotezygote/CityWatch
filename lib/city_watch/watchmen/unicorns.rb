@@ -3,16 +3,16 @@ class Unicorns
 	include Watchman
 	
 	def self.data
-		out = {:masters => [], :workers => []}
-		PS.data.select do |line|
+		out = PS.data.inject({:masters => [], :workers => []}) do |acc,line|
 			if line[:command][/^start master/]
-				out[:masters] << line
+				acc[:masters] << line
 			end
 			if line[:command][/^start worker/]
-				out[:workers] << line
+				acc[:workers] << line
 			end
+			acc
 		end
-		out
+		out.merge({:num_masters => out[:masters].count, :num_workers => out[:workers].count, :summary => [:num_masters, :num_workers]})
 	end
 	
 end

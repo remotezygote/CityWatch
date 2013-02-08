@@ -3,8 +3,6 @@
 require 'yajl'
 require 'city_watch'
 
-CityWatch.configure if ARGV[0]
-
 puts "Starting watch collector..."
 
 require 'unicorn/launcher'

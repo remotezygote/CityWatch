@@ -4,7 +4,7 @@ require 'yajl'
 require 'city_watch'
 require 'city_watch/agent'
 
-CityWatch.configure if ARGV[0]
+Commands.test if CityWatch.debug?
 
 dat = {
 	:hostname => ::Socket.gethostname,

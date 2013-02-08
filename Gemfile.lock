@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    city_watch (0.0.1a)
+    city_watch (0.0.2)
       rack
       rack-mount
       redis

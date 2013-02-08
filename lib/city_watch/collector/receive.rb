@@ -5,10 +5,15 @@ class ResendRequest
 		post_data = begin Yajl::Parser.new(:symbolize_keys => true).parse(env["rack.input"].read) || {} rescue {} end
 		post_data[:received_at] = Time.now.to_s
 		
-		require 'redis'
-		redis = Redis.new
-		redis.sadd "#{CityWatch.config[:prefix]}::known_hosts", post_data[:hostname]
-		redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::raw_stats", Time.now.to_i, Yajl::Encoder.encode(post_data)
+		CityWatch.redis.sadd "#{CityWatch.config[:prefix]}::known_hosts", post_data[:hostname]
+		CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::raw_stats", Time.now.to_i, Yajl::Encoder.encode(post_data)
+		
+		post_data[:watchmen].each do |watchman,dat|
+			CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::#{watchman}", Time.now.to_i, Yajl::Encoder.encode(dat.merge({:received_at => post_data[:received_at]}))
+			if dat[:summary]
+				CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{post_data[:hostname]}::#{watchman}::summary", Time.now.to_i, Yajl::Encoder.encode(dat[:summary].inject({}) {|acc,k| acc[k.to_sym] = dat[k.to_sym]; acc}.merge({:received_at => post_data[:received_at]}))
+			end
+		end
 		
 		[200,{"Content-Type" => "text/plain"},["Got it!"]]
 	end

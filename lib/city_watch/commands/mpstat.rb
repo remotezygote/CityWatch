@@ -9,8 +9,7 @@ class MPstat
 	end
 	
 	def data
-		output = []
-		command_output.split("\n").map {|line| v = line.split("\s"); v.shift; v }.each do |line|
+		command_output.split("\n").map {|line| line.split("\s") }.inject([]) do |output,line|
 			if line[1] == "CPU"
 				headers = line.map {|hdr| hdr.gsub(/%/,'').to_sym}
 				next
@@ -21,8 +20,8 @@ class MPstat
 				pkt[headers[idx]] = itm
 			end
 			output << pkt
+			output
 		end
-		output
 	end
 	
 end

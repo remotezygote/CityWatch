@@ -1,2 +1,4 @@
 :unicorn:
   :port: 62001
+:redis:
+  :db: 2
