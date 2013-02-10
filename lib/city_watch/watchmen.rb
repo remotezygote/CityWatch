@@ -20,6 +20,17 @@ module Watchmen
 		@watchmen << cls
 	end
 	
+	def self.add_rule(&block)
+		@rules ||= []
+		@rules << block
+	end
+	
+	def self.run_rules(data)
+		@rules.map do |rule|
+			rule.call(data)
+		end
+	end
+	
 end
 
 require 'city_watch/util/watchman'

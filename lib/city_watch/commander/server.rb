@@ -6,7 +6,7 @@ class Server
 		server = parms[:server]
 		
 		output = CityWatch.header << '<h1>' << server << "</h1><ul>"
-		CityWatch.redis.zrevrange("#{CityWatch.config[:prefix]}::#{server}::raw_stats",0,100).each do |update|
+		CityWatch.redis.zrevrange("#{CityWatch.config[:prefix]}::#{server}::raw_stats",0,10).each do |update|
 			dat = Yajl::Parser.new(:symbolize_keys => true).parse(update)
 			output << "<li><h4>" << dat[:received_at] << "</h4><ul>"
 			dat[:watchmen].each do |name,datr|
