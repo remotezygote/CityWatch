@@ -26,4 +26,21 @@ module Collector
 		end
 	end
 	
+	def self.process(data)
+		rcv_time = Time.now.to_i
+		host = data[:hostname]
+		CityWatch.redis.sadd "#{CityWatch.config[:prefix]}::known_hosts", host
+		CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{host}::raw_stats", rcv_time, Yajl::Encoder.encode(data)
+		
+		summary = {}
+		
+		data[:watchmen].each do |watchman,dat|
+			if watch_obj = Watchmen.get(watchman)
+				status, summary[watchman] = watch_obj.process(dat,rcv_time,host)
+			end
+		end
+		
+		CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{host}::summary", rcv_time, Yajl::Encoder.encode(summary.merge({:received_at => data[:received_at]}))
+	end
+	
 end

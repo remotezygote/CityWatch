@@ -19,7 +19,7 @@ class Unicorns
 		out.merge({:num_masters => out[:masters].count, :num_workers => out[:workers].count, :summary => [:num_masters, :num_workers]})
 	end
 	
-	add_rule do |dat|
+	add_rule(:high_memory_usage) do |dat|
 		
 	end
 	

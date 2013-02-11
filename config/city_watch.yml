@@ -1,1 +1,2 @@
-:collector: "localhost:62001"
+:debug: true
+:watch_collector: "localhost:62001"

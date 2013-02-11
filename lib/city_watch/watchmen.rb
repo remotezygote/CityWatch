@@ -20,14 +20,13 @@ module Watchmen
 		@watchmen << cls
 	end
 	
-	def self.add_rule(&block)
-		@rules ||= []
-		@rules << block
+	def self.get(name)
+		@watchmen.select {|w| w.name.to_s == name.to_s }.first
 	end
 	
-	def self.run_rules(data)
-		@rules.map do |rule|
-			rule.call(data)
+	def self.each
+		@watchmen.each do |w|
+			yield w
 		end
 	end
 	
