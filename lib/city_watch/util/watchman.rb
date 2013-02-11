@@ -1,6 +1,8 @@
 require 'city_watch/util/alerts'
 require 'city_watch/util/rules'
 require 'city_watch/util/flags'
+require 'city_watch/util/notifications'
+require 'city_watch/util/datasets'
 
 module Watchman
 	
@@ -52,9 +54,11 @@ module Watchman
 	end
 	
 	def self.included(base)
-		base.extend(Alerts::ClassMethods)
-		base.extend(Rules::ClassMethods)
-		base.extend(Flags::ClassMethods)
+		base.extend(Alerts)
+		base.extend(Rules)
+		base.extend(Flags)
+		base.extend(Notifications)
+		base.extend(DataSets)
 		base.extend(ClassMethods)
 		Watchmen.register(base)
 	end
