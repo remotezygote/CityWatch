@@ -2,7 +2,7 @@ class DiskUsage
 	
 	include Watchman
 	
-	set_default :usage_threshold, 60
+	set_default :usage_threshold, 75
 	
 	def self.data
 		dat = DF.data

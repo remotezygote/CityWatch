@@ -9,9 +9,9 @@ class Server
 		Watchmen.each do |watchman|
 			flags = watchman.get_flags(server)
 			alerts = watchman.get_alerts(server,2)
-			if (flags && flags.keys.count > 0) || (alerts && alerts.count > 0)
+			if (flags && flags.count > 0) || (alerts && alerts.count > 0)
 				output << "<h3>" << watchman.name.to_s << "</h3><ul>"
-				if flags && flags.keys.count > 0
+				if flags && flags.count > 0
 					output << "<li class=\"alert\"><strong>Flags:</strong> <pre><code>" << Yajl::Encoder.encode(flags,:pretty => true, :indent => "   ") << "</code></pre></li>"
 				end
 				if alerts && alerts.count > 0
