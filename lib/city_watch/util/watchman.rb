@@ -21,9 +21,7 @@ module Watchman
 				sum = dat[:summary].is_a?(Array) ? dat[:summary].inject({}) {|acc,k| acc[k.to_sym] = dat[k.to_sym]; acc} : dat[:summary]
 				CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{host}::#{self.name}::summary", rcv_time, Yajl::Encoder.encode(sum)
 			end
-			run_rules(dat)
-			run_dataset_collector(dat)
-			send_alerts!
+			run_post_processors!(dat,rcv,host)
 			return 0, sum || nil
 		end
 		
@@ -53,16 +51,30 @@ module Watchman
 		end
 		alias_method :option, :options
 		
+		def run_post_processors!(dat,rcv,host)
+			@post_processors.each do |proc|
+				proc.call(dat,rcv,host)
+			end if @post_processors
+		end
+		
+		def add_post_processor(meth=nil,&block)
+			@post_processors ||= []
+			@post_processors << (block_given? ? block : meth)
+		end
+		
 	end
 	
 	def self.included(base)
+		base.extend(ClassMethods)
 		base.extend(Alerts)
+		base.add_post_processor base.method(:send_alerts!)
 		base.extend(Rules)
+		base.add_post_processor base.method(:run_rules)
 		base.extend(Flags)
 		base.extend(Notifications)
 		base.extend(DataSets)
+		base.add_post_processor base.method(:run_dataset_collector)
 		base.extend(Status)
-		base.extend(ClassMethods)
 		Watchmen.register(base)
 	end
 	

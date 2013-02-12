@@ -20,7 +20,7 @@ module Alerts
 		CityWatch.redis.zrevrange "#{CityWatch.config[:prefix]}::#{host}::#{self.name}::alerts", 0, num - 1
 	end
 
-	def send_alerts!
+	def send_alerts!(*args)
 		get_alerts.map do |alert|
 			puts "Alert: #{alert.inspect}" if CityWatch.debug?
 		end

@@ -17,4 +17,8 @@ class Uptime
 		out.merge({:summary => [:uptime_days]})
 	end
 	
+	add_rule(:status_vars) do |data|
+		set_status_var :uptime, data[:uptime_days]
+	end 
+	
 end

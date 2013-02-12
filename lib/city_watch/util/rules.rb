@@ -5,7 +5,7 @@ module Rules
 		@rules[name] = block
 	end
 	
-	def run_rules(dat)
+	def run_rules(dat,rcv=nil,host=nil)
 		@rules.map do |(name,rule)|
 			rule.call(dat)
 		end if @rules

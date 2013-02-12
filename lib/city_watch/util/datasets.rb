@@ -5,7 +5,7 @@ module DataSets
 		@datasets[name] = block
 	end
 	
-	def run_dataset_collector(dat)
+	def run_dataset_collector(dat,rcv=nil,host=nil)
 		@datasets.map do |(name,dataset)|
 			dataset.call(dat)
 		end if @datasets
