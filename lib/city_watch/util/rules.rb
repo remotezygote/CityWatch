@@ -4,7 +4,7 @@ module Rules
 		@rules ||= {}
 		@rules[name] = block
 	end
-
+	
 	def run_rules(dat)
 		@rules.map do |(name,rule)|
 			rule.call(dat)

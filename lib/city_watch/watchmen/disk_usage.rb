@@ -21,4 +21,8 @@ class DiskUsage
 		
 	end
 	
+	dataset(:save_dataset) do |data|
+		add_to_data_set(:root_disk_usage,data[:summary].to_f)
+	end
+	
 end

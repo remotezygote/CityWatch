@@ -2,9 +2,12 @@ class Uptime
 	
 	include Watchman
 	
+	set_default :uptime_file, '/proc/uptime'
+	
 	def self.data
+		return {} if !File.exists?(option(:uptime_file))
 		out = {}
-		out[:uptime], out[:idle] = File.read('/proc/uptime').strip.split.map {|t| Float(t) }
+		out[:uptime], out[:idle] = File.read(option(:uptime_file)).strip.split.map {|t| Float(t) }
 		base = out.dup
 		[[:minutes,Proc.new{|t| t / 60 }],[:hours,Proc.new{|t| t / (60*60) }],[:days,Proc.new{|t| t / (60*60*24) }]].each do |(id,func)|
 			base.each do |k,v|

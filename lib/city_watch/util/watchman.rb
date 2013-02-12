@@ -3,6 +3,7 @@ require 'city_watch/util/rules'
 require 'city_watch/util/flags'
 require 'city_watch/util/notifications'
 require 'city_watch/util/datasets'
+require 'city_watch/util/status'
 
 module Watchman
 	
@@ -21,6 +22,7 @@ module Watchman
 				CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{host}::#{self.name}::summary", rcv_time, Yajl::Encoder.encode(sum)
 			end
 			run_rules(dat)
+			run_dataset_collector(dat)
 			send_alerts!
 			return 0, sum || nil
 		end
@@ -59,6 +61,7 @@ module Watchman
 		base.extend(Flags)
 		base.extend(Notifications)
 		base.extend(DataSets)
+		base.extend(Status)
 		base.extend(ClassMethods)
 		Watchmen.register(base)
 	end
