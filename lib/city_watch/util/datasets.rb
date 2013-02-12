@@ -19,6 +19,7 @@ module DataSets
 	end
 	
 	def data_set_key(data_set_name,host=host)
+		CityWatch.redis.sadd "#{CityWatch.config[:prefix]}::#{host}::#{self.name}::data_sets", data_set_name
 		"#{CityWatch.config[:prefix]}::#{host}::#{self.name}::data_set::#{data_set_name}"
 	end
 	
