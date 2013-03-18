@@ -27,6 +27,7 @@ module Reader
 		def sparkline_image_tags
 			data_sets.map do |set|
 				dat = get_data_set(set)
+				puts dat.inspect
 				[set.to_sym, dat.length > 1 ? sparkline_img_tag(dat.map {|(tm,val)| val }, set) : nil]
 			end.select {|(name,tag)| !tag.nil? }
 		end
@@ -34,7 +35,7 @@ module Reader
 		def get_data_set(data_set_name,s_time=(Time.now - (60*60*4)),e_time=Time.now)
 			CityWatch.redis.zrevrangebyscore(data_set_key(data_set_name), e_time.to_i, s_time.to_i, :with_scores => true).map do |(val,score)|
 				timestamp,value = val.split(",")
-				[Time.at(timestamp.to_i), Float(value)]
+				[Time.at(timestamp.to_i), Float(value).to_i]
 			end
 		end
 		
