@@ -1,0 +1,9 @@
+<%
+sum = summary
+update_time = sum.delete(:received_at)
+%>
+<div class="server">
+	<% sum.each do |watchman,dat| %>
+	<%= Reader::Watchman.new(watchman).render_from_summary(dat) %>
+	<% end %>
+</div>

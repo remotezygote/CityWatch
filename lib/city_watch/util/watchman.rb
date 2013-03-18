@@ -16,6 +16,7 @@ module Watchman
 		def process(dat,rcv,host)
 			@host = host
 			@rcv_time = rcv
+			CityWatch.redis.sadd "#{CityWatch.config[:prefix]}::#{host}::watchmen", self.name
 			CityWatch.redis.zadd "#{CityWatch.config[:prefix]}::#{host}::#{self.name}", rcv_time, Yajl::Encoder.encode(dat.merge({:received_at => dat[:received_at]}))
 			if dat[:summary]
 				sum = dat[:summary].is_a?(Array) ? dat[:summary].inject({}) {|acc,k| acc[k.to_sym] = dat[k.to_sym]; acc} : dat[:summary]
@@ -60,14 +61,6 @@ module Watchman
 		def add_post_processor(meth=nil,&block)
 			@post_processors ||= []
 			@post_processors << (block_given? ? block : meth)
-		end
-		
-		def sparkline(dat)
-			Base64.encode64(Spark.smooth(dat, :has_min => true, :has_max => true, :height => 14, :step => 4)).gsub("\n",'')
-		end
-		
-		def sparkline_img_tag(dat)
-			"<img src=\"#{sparkline(dat)}\"/>"
 		end
 		
 	end
