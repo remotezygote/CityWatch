@@ -3,7 +3,7 @@ sum = summary
 update_time = sum.delete("received_at")
 %>
 <div class="server">
-	<a href="/<%=@host%>"><%=@host%></a>
+	<a href="/<%=@host%>"><%=@host%></a> (Last update: <%=update_time%>)
 	<% sum.each do |watchman,dat| %>
 	<%= Reader::Watchman.new(@host,watchman).render_from_summary(dat) %>
 	<% end %>
