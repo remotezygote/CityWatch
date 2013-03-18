@@ -36,7 +36,7 @@ module Collector
 		
 		data[:watchmen].each do |watchman,dat|
 			if watch_obj = Watchmen.get(watchman)
-				status, sum = watch_obj.process(dat,rcv_time,host)
+				_, sum = watch_obj.process(dat,rcv_time,host)
 				summary[watchman] = sum if sum
 			end
 		end

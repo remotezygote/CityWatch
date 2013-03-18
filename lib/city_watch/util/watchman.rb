@@ -43,7 +43,7 @@ module Watchman
 		
 		def options(*args)
 			if args.count > 1
-				return args.map {|k| opts[k]}
+				return args.map {|k| opts[k] }
 			else
 				return opts[args.first]
 			end
@@ -60,6 +60,14 @@ module Watchman
 		def add_post_processor(meth=nil,&block)
 			@post_processors ||= []
 			@post_processors << (block_given? ? block : meth)
+		end
+		
+		def sparkline(dat)
+			Base64.encode64(Spark.smooth(dat, :has_min => true, :has_max => true, :height => 14, :step => 4)).gsub("\n",'')
+		end
+		
+		def sparkline_img_tag(dat)
+			"<img src=\"#{sparkline(dat)}\"/>"
 		end
 		
 	end
