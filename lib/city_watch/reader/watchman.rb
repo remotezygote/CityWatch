@@ -2,6 +2,8 @@ module Reader
 	
 	class Watchman
 		
+		include Renderer
+		
 		def initialize(host,name)
 			@host = host
 			@name = name

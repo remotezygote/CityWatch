@@ -1,7 +1,9 @@
 PATH
   remote: .
   specs:
-    city-watch (0.5.7)
+    city-watch (0.6.3)
+      erubis
+      mail
       rack
       rack-mount
       redis
@@ -13,27 +15,38 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    diff-lcs (1.1.3)
+    diff-lcs (1.2.1)
     drydock (0.6.9)
-    kgio (2.7.4)
-    rack (1.4.1)
+    erubis (2.7.0)
+    i18n (0.6.4)
+    kgio (2.8.0)
+    mail (2.5.3)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime-types (1.21)
+    polyglot (0.3.3)
+    rack (1.5.2)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
     raindrops (0.10.0)
-    redis (3.0.2)
-    rspec (2.12.0)
-      rspec-core (~> 2.12.0)
-      rspec-expectations (~> 2.12.0)
-      rspec-mocks (~> 2.12.0)
-    rspec-core (2.12.1)
-    rspec-expectations (2.12.0)
-      diff-lcs (~> 1.1.3)
-    rspec-mocks (2.12.0)
+    redis (3.0.3)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.0)
     storable (0.8.9)
     sysinfo (0.8.0)
       drydock
       storable
-    unicorn (4.5.0)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+    unicorn (4.6.2)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)

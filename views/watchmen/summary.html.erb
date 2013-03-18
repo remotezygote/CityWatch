@@ -1,4 +1,2 @@
-<h3><%=@name%></h3>
-<pre>
-	<code><%=Yajl::Encoder.encode(Yajl::Parser.parse(@current_data),:pretty => true, :indent => "   ")%></code>
-</pre>
+<h4><%=@name%></h4>
+<pre><code><%=Yajl::Encoder.encode(@current_data,:pretty => true, :indent => "   ")%></code></pre>

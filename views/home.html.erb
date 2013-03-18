@@ -1,6 +1,6 @@
 <h1>Known servers:</h1>
 <ul>
 	<% servers.each do |server| %>
-	<li><a href="/<%=server.hostname%>"><%=server.hostname%></a>: <%=server.summary_html%></li>
+	<li><%=server.summary_html%></li>
 	<% end %>
 </ul>

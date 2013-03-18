@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
 	s.add_dependency "rack"
 	s.add_dependency "rack-mount"
 	s.add_dependency "unicorn"
+	s.add_dependency "mail"
 	s.add_dependency "erubis"
 	s.add_dependency "yajl-ruby"
 	s.add_dependency "sysinfo"

@@ -1,9 +1,10 @@
 <%
 sum = summary
-update_time = sum.delete(:received_at)
+update_time = sum.delete("received_at")
 %>
 <div class="server">
+	<a href="/<%=@host%>"><%=@host%></a>
 	<% sum.each do |watchman,dat| %>
-	<%= Reader::Watchman.new(watchman).render_from_summary(dat) %>
+	<%= Reader::Watchman.new(@host,watchman).render_from_summary(dat) %>
 	<% end %>
 </div>

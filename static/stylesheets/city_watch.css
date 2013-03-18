@@ -11,6 +11,9 @@ h1{
 }
 h4{
 	font-size:105%;
+	margin:1em 0 .5em;
+	padding:0;
+	opacity:.4;
 }
 a{
 	color:rgb(50,30,100);
@@ -27,4 +30,13 @@ ul,ul li{
 }
 ul li{
 	list-style-type:none;
+}
+div.server{
+	background-color:rgba(0,0,0,.02);
+	padding:1em;
+	margin-bottom:1em;
+}
+pre{
+	padding:0;
+	margin:0;
 }

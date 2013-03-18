@@ -45,7 +45,7 @@ module Reader
 		end
 		
 		def summaries(num=1)
-			CityWatch.redis.zrevrange(summary_key,0,num)
+			CityWatch.redis.zrevrange(summary_key,0,num).map {|sum| Yajl::Parser.parse(sum) }
 		end
 		
 		def summary_key

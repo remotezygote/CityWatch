@@ -4,7 +4,7 @@ module Renderer
 	
 	def render(*tpl)
 		layout do
-			render_bar(*tpl)
+			render_bare(*tpl)
 		end
 	end
 	
@@ -38,7 +38,7 @@ module Renderer
 	def template(*tpl)
 		return @templates[tpl.join] if @templates && @templates[tpl.join]
 		file_path = template_path(*tpl)
-		return template_content(file_path) if DEBUG
+		return template_content(file_path) if CityWatch.debug?
 		@templates ||= {}
 		@templates[tpl.join] ||= template_content(file_path)
 	end
