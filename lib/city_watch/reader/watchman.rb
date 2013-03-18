@@ -26,14 +26,15 @@ module Reader
 		
 		def sparkline_image_tags
 			data_sets.map do |set|
-				[set.to_sym, sparkline_img_tag(get_data_set(set).map {|(tm,val)| val })]
-			end
+				dat = get_data_set(set)
+				[set.to_sym, dat.length > 1 ? sparkline_img_tag(dat.map {|(tm,val)| val }, set) : nil]
+			end.select {|(name,tag)| !tag.nil? }
 		end
 		
-		def get_data_set(data_set_name,s_time=(Time.now - (60*60*12)),e_time=Time.now)
-			CityWatch.redis.zrevrangebyscore(data_set_key(data_set_name), s_time.to_i, e_time.to_i, :with_scores => true).map do |(val,score)|
+		def get_data_set(data_set_name,s_time=(Time.now - (60*60*4)),e_time=Time.now)
+			CityWatch.redis.zrevrangebyscore(data_set_key(data_set_name), e_time.to_i, s_time.to_i, :with_scores => true).map do |(val,score)|
 				timestamp,value = val.split(",")
-				[Time.at(timestamp.to_i), value]
+				[Time.at(timestamp.to_i), Float(value)]
 			end
 		end
 		
@@ -50,11 +51,13 @@ module Reader
 		end
 		
 		def sparkline(dat)
-			Base64.encode64(Spark.smooth(dat, :has_min => true, :has_max => true, :height => 14, :step => 4)).gsub("\n",'')
+			require 'base64'
+			require 'city_watch/util/spark_pr'
+			Base64.encode64(Spark.smooth(dat, :height => 14, :step => 4).to_png).gsub("\n",'')
 		end
 
-		def sparkline_img_tag(dat)
-			"<img src=\"data:image/png;base64,#{sparkline(dat)}\"/>"
+		def sparkline_img_tag(dat,alt="")
+			"<img src=\"data:image/png;base64,#{sparkline(dat)}\" alt=\"#{alt}\" title=\"#{alt}\"/>"
 		end
 		
 		def key(more)

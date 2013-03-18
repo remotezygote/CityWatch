@@ -1,2 +1,2 @@
 <h4><%=@name%></h4>
-<strong>Root FS usage: </strong><%=@current_data%>
+<strong>Root FS usage: </strong><%=@current_data%>&nbsp;<%= sparkline_image_tags.map {|(name,tag)| tag }.join("&nbsp;")%>
