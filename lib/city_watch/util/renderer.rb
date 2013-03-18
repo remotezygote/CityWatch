@@ -16,7 +16,7 @@ module Renderer
 	end
 	
 	def render_bare(*tpl)
-		Erubis::FastEruby.new(template(*tpl), filename: template_path(*tpl)).result(binding)
+		template(*tpl).result(binding)
 	end
 	
 	private
@@ -37,8 +37,8 @@ module Renderer
 	def template(*tpl)
 		return TemplateCache[tpl.join] if TemplateCache[tpl.join]
 		file_path = template_path(*tpl)
-		return template_content(file_path) if CityWatch.debug?
-		TemplateCache[tpl.join] ||= template_content(file_path)
+		return Erubis::FastEruby.new(template_content(file_path), filename: file_path) if CityWatch.debug?
+		TemplateCache[tpl.join] ||= Erubis::FastEruby.new(template_content(file_path), filename: file_path)
 	end
 	
 	def view_path
