@@ -41,7 +41,7 @@ module Reader
 		end
 		
 		def summary_html
-			render "server/summary"
+			render_bare "server/summary"
 		end
 		
 		def summaries(num=1)

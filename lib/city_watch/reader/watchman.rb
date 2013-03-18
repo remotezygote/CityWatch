@@ -11,9 +11,7 @@ module Reader
 		
 		def render_from_summary(data)
 			@current_data = data
-			return render("watchmen/#{@name}/summary", "watchmen/summary")
-			ensure
-			@current_data = nil
+			render_bare "watchmen/#{@name}/summary", "watchmen/summary"
 		end
 		
 		def watchman_class
