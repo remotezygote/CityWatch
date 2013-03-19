@@ -74,7 +74,7 @@ module Reader
 		def sparkline_img_tag_for(set)
 			dat = get_data_set(set)
 			if dat.length > 1
-				"<img src=\"data:image/png;base64,#{sparkline(dat)}\" alt=\"#{set}\" title=\"#{set} max: #{dat.max} min: #{dat.min}\"/>"
+				sparkline_img_tag(dat.map {|(tm,val)| val },set)
 			else
 				""
 			end
