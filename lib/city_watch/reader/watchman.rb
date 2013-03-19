@@ -61,6 +61,25 @@ module Reader
 			"<img src=\"data:image/png;base64,#{sparkline(dat)}\" alt=\"#{alt}\" title=\"#{alt} max: #{dat.max} min: #{dat.min}\"/>"
 		end
 		
+		def sparkline_for(set)
+			dat = get_data_set(set)
+			if dat.length > 1
+				puts dat.inspect
+				require 'base64'
+				require 'city_watch/util/spark_pr'
+				Base64.encode64(Spark.smooth(dat.map {|(tm,val)| val }, :height => 14, :step => 4).to_png).gsub("\n",'')
+			end
+		end
+
+		def sparkline_img_tag_for(set)
+			dat = get_data_set(set)
+			if dat.length > 1
+				"<img src=\"data:image/png;base64,#{sparkline(dat)}\" alt=\"#{set}\" title=\"#{set} max: #{dat.max} min: #{dat.min}\"/>"
+			else
+				""
+			end
+		end
+		
 		def key(more)
 			"#{key_prefix}::#{more}"
 		end
