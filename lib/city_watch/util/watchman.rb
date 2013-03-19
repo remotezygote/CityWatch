@@ -39,7 +39,7 @@ module Watchman
 		end
 		
 		def opts
-			@options ||= {}
+			@options ||= get_watchman_options
 		end
 		
 		def options(*args)
@@ -61,6 +61,10 @@ module Watchman
 		def add_post_processor(meth=nil,&block)
 			@post_processors ||= []
 			@post_processors << (block_given? ? block : meth)
+		end
+		
+		def get_watchman_options
+			CityWatch.config[:watchmen] && CityWatch.config[:watchmen][self.name.to_sym] ? CityWatch.config[:watchmen][self.name.to_sym] : {}
 		end
 		
 	end
