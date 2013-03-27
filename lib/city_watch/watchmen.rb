@@ -10,7 +10,7 @@ module Watchmen
 	
 	def self.data
 		@watchmen.inject({}) do |acc,watchman|
-			if !CityWatch.config[:watchmen] || CityWatch.config[:watchmen][watchman.name.to_sym]
+			if !CityWatch.config[:watchmen] || (CityWatch.config[:watchmen].is_a?(Array) ? CityWatch.config[:watchmen].include?(watchman.name.to_sym) : CityWatch.config[:watchmen][watchman.name.to_sym])
 				acc[watchman.name] = watchman.data
 			end
 			acc
