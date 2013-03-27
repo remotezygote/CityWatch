@@ -14,6 +14,7 @@ module Watchman
 	module ClassMethods
 		
 		def process(dat,rcv,host)
+			return unless dat
 			@host = host
 			@rcv_time = rcv
 			CityWatch.redis.sadd "#{CityWatch.config[:prefix]}::#{host}::watchmen", self.name
