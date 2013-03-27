@@ -18,10 +18,11 @@ module Collector
 		req = Net::HTTP::Post.new(uri.path)
 		req.body = Yajl::Encoder.encode(dat)
 		req["Content-Type"] = 'application/json'
-		case http.request(req)
+		case resp = http.request(req)
 			when Net::HTTPSuccess
 				puts "Successfully sent to collector." if CityWatch.debug?
 			else
+				puts resp.inspect
 				raise Exception
 		end
 	end
