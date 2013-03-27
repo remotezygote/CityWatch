@@ -65,7 +65,7 @@ module Watchman
 		end
 		
 		def get_watchman_options
-			CityWatch.config[:watchmen] && CityWatch.config[:watchmen][self.name.to_sym] && CityWatch.config[:watchmen][self.name.to_sym].is_a?(Hash) ? CityWatch.config[:watchmen][self.name.to_sym] : {}
+			CityWatch.config[:watchmen] && CityWatch.config[:watchmen].is_a?(Hash) && CityWatch.config[:watchmen][self.name.to_sym] && CityWatch.config[:watchmen][self.name.to_sym].is_a?(Hash) ? CityWatch.config[:watchmen][self.name.to_sym] : {}
 		end
 		
 	end
